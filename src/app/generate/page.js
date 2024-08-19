@@ -3,7 +3,9 @@
 import { useUser } from "@clerk/nextjs"
 import db from "../../../firebase"
 import { Box, Container, Paper, TextField, Typography, Button, Dialog, DialogTitle, DialogContent,
-DialogContentText, DialogActions, Grid, Card, CardActionArea, CardContent } from "@mui/material"
+DialogContentText, DialogActions, Grid, Card, CardActionArea, CardContent, AppBar, Toolbar} from "@mui/material"
+import Image from 'next/image';
+import flashCardImg from '../assets/flash-card.png';
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { doc, collection, setDoc, getDoc, writeBatch } from "firebase/firestore"
@@ -77,6 +79,50 @@ export default function Generate() {
 
   return (
     <Container maxWidth="md">
+      {/* AppBar start */}
+      <AppBar elevation={0} sx={{ backgroundColor: 'white', color: 'black'}} fullWidth position="static">
+                <Toolbar >
+                <Typography 
+                    variant="h6" 
+                    sx={{
+                    mr: 2,
+                    display: 'flex',
+                    fontFamily: 'monospace',
+                    fontWeight: 700,
+                    letterSpacing: '.2rem',
+                    color: 'black',
+                    textDecoration: 'none',
+                    gap: '10px',
+                    }} 
+                    style={{ flexGrow: 1 }} 
+                    display={'flex'} 
+                    alignItems={'center'}
+                >
+                    <Box 
+                        component="a" 
+                        href="/" 
+                        sx={{ 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            textDecoration: 'none', 
+                            color: 'black',
+                            gap: '10px',
+                            width: 400 // Set your desired width here
+                        }}
+                        >
+                            <Image src={flashCardImg} width={38} height={38} alt="Logo"/>
+                            <Typography variant="h6">Flashcard AI</Typography>
+
+                    </Box>
+                </Typography>
+                </Toolbar>
+            </AppBar>
+            {/* End AppBar */}
+
+
+
+
+
       <Box sx={{
         mt: 4,
         mb: 2,
@@ -94,13 +140,13 @@ export default function Generate() {
             label="Enter text"
             fullWidth
             multiline
+            color="secondary"
             rows={4}
             variant="outlined"
             sx={{ mb: 2 }}
           />
           <Button
-            variant="contained"
-            color="primary"
+            sx={{backgroundColor: 'black', color: 'white', border: '1px solid black', borderRadius: '50px', '&:hover': {color: 'black', border: '1px solid black'}}}
             onClick={handleSubmit}
             fullWidth
           >
@@ -180,7 +226,7 @@ export default function Generate() {
         <DialogTitle>Save Flashcards</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Please enter a name for your flashcards collection.
+            Please enter a name for your flashcards collection
           </DialogContentText>
           <TextField
             autoFocus
@@ -194,8 +240,13 @@ export default function Generate() {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={saveFlashcards}>
+          <Button sx={{borderRadius: '50px', padding: '2px 5px', backgroundColor: "white", color: "black", '&:hover': {color: "grey"}}} onClick={handleClose}>Cancel</Button>
+          <Button 
+          sx={{borderRadius: '50px', padding: '2px 5px', backgroundColor: "black", color: "white", border: "1px solid black", 
+            '&:hover': {backgroundColor: "white", color: "black", border: "1px solid black"}
+          }}
+
+            onClick={saveFlashcards}>
             Save
           </Button>
         </DialogActions>
